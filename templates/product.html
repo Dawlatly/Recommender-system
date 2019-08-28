@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/store/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Rakkas" rel="stylesheet">
+    <title>Klass Office</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6"><a href="#"><img src="../static/store/Kloth.png" alt="Logo" id="logo" class="img-responsive"></a></div>
+        <div class="col-sm-6 text-center text-uppercase" id="slogan">
+          <br>
+          <br>
+          <h1>Klass Office</h1>
+          <h3>Your One Stop to Office Supplies</h3>
+        </div>
+      </div>
+      <hr class="hstyle">
+      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-center" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Shop Categories</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
+
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'shoppingcart' %}">Shopping Cart <img src="../static/store/open-iconic-master/png/cart-2x.png" alt=""></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <br>
+      <div class="row center-block">
+        <div class="col-sm-12 subtitle">
+          <h3 id="slogan">Shop By Category</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"><img src="http://via.placeholder.com/500x300" class="img-responsive center-block"><h3 align="center" id="slogan">Office Supplies</h3></div>
+          <div class="col-md-6"><img src="http://via.placeholder.com/500x300" class="img-responsive center-block"><h3 align="center" id="slogan">Technology</h3></div>
+          <div class="col-md-6"><img src="http://via.placeholder.com/500x300" class="img-responsive center-block"><h3 align="center" id="slogan">Furniture</h3></div>
+        </div>
+
+      </div>
+      <footer class="footer bg-light">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <h6 class="footer-header">Help</h6>
+              <p><a href="#" class="footer-text">Check out our FAQs</a></p>
+            </div>
+            <div class="col-sm-6">
+              <h6 class="footer-header">Shop by Category</h6>
+              <p><a href="#" class="footer-text">Browse our various categories of clothing</a></p>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <h6 class="footer-header">About Us</h6>
+              <p><a href="#" class="footer-text">Find out more about Klass Klothing</a></p>
+            </div>
+            <div class="col-sm-6">
+              <h6 class="footer-header">Contact Us</h6>
+              <p><a href="#" class="footer-text">How can you reach us</a></p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  </body>
+</html>

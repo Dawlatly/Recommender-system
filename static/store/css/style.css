@@ -1,0 +1,91 @@
+#logo{
+    width: 30%;
+    margin-top: 10px;
+}
+#slogan,.form-signin-heading,.footer-header,.footer-text,.form-signup-heading{
+    font-family: 'Rakkas', cursive;
+}
+
+#addtocart{
+  color: black;
+  background-color: #FFDF00;
+  border-color: black;
+  margin-bottom: 10%;
+}
+
+hr.hstyle {
+  border: 0;
+  height: 3px;
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+}
+
+hr.hstyle2 {
+  border: 0;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #FFDF00, #f0f0f0);
+}
+
+.separator{
+    border-top: 1.5px solid #FFDF00;
+}
+
+.form-signin,.form-signup{
+    width: 50%;
+    margin-top: 5%;
+    margin-left: 20%;
+}
+
+#product{
+    border-style: solid;
+    padding-top: 1%;
+}
+
+#quantity{
+    width: 25%;
+}
+[id~="quantity"] {
+    width: 25%;
+}
+
+#inputConfirmPassword,#inputEmail,#inputPassword,#inputName{
+    margin-bottom: 2%;
+}
+.nav-link{
+    margin-right: 4em;
+}
+.footer{
+    margin-top: 3%;
+}
+.footer-text{
+    font-size: smaller;
+    text-decoration: none;
+    color: black;
+}
+.vrule{
+    margin-right: 30px;
+}
+
+.tab-prev{
+    width: 2%;
+}
+.tab-next{
+    width: 2%;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#summary-font{
+    font-size: 80%;
+}
+#summary{
+    border: 1px solid #DDE2E4;
+    height: 50%;
+}

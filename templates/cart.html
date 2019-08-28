@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/store/css/style.css">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Rakkas" rel="stylesheet">
+    <title>Shopping Cart</title>
+  </head>
+  <body>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Unsuccessful</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <p>All products have zero quantity.Please check and try again.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6"><a href="{% url 'index' %}"><img src="../static/store/Kloth.png" alt="Logo" id="logo" class="img-responsive"></a></div>
+        <div class="col-sm-6 text-center text-uppercase" id="slogan">
+          <br>
+          <br>
+          <h1>Klass Office</h1>
+          <h3>Your One Stop to Office Supplies</h3>
+        </div>
+      </div>
+      <hr class="hstyle">
+      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-center" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'categories' %}">Shop Categories</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item active">
+                      <div class="dropdown show">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Welcome, {{ user.first_name }}
+                      </a>
+
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'shoppingcart' username=user.username%}">Shopping Cart <img src="../static/store/open-iconic-master/png/cart-2x.png" alt=""></a>
+                        <a class="dropdown-item" href="{% url 'orders' username=user.username%}">My Orders</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                      </div>
+                      </div>
+                </li>
+            {% else %}
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+      <div class="row" id="product">
+        <div class="col-sm-6">
+            <h6 id="slogan">Product</h6>
+        </div>
+        <div class="col-sm-2">
+            <h6 id="slogan">Price</h6>
+        </div>
+        <div class="col-sm-2">
+            <h6 id="slogan">Quantity</h6>
+        </div>
+        <div class="col-sm-2">
+            <h6 id="slogan">Total</h6>
+        </div>
+      </div>
+      <br>
+      {% if cart.cart_Products.exists %}
+          <form method="post" action="{% url 'checkout' cartid=cart.id %}">
+          {% for p in cart.cart_Products.all %}
+              <div class="row">
+                <div class="col-sm-6">
+                    <img src="../static/store/productPlaceholder.jpg" width="250" height="150" alt="First slide">
+                    <br>
+                    <br>
+                    <h6>{{ p.product_Name }}</h6>
+                </div>
+                <div class="col-sm-2">
+                    <h6 id="price {{ forloop.counter }}">{{ p.product_Price }}</h6>
+                </div>
+                <div class="col-sm-2">
+                    <label for="quantity {{ forloop.counter }}"></label>
+                    <a class="fa fa-minus" aria-hidden="true" onclick="minus({{ forloop.counter }})"></a>
+                    <input type="number" name="quantity" id="quantity {{ forloop.counter }}" value="0" min="0">
+                    <a class="fa fa-plus" aria-hidden="true" onclick="plus({{ forloop.counter }})"></a>
+                </div>
+                <div class="col-sm-1">
+                    <h6 id="total {{ forloop.counter }}"></h6>
+                </div>
+                <div class="col-sm-1">
+                    <a class="fa fa-close" href="{% url 'delete' productid=p.product_Id username=user.username %}"></a>
+                </div>
+              </div>
+            <hr class="separator">
+          {% endfor %}
+          <div class="row">
+              <div class="col-sm-12" align="right">
+                  <h6 id="slogan">Total:<span id="all"></span></h6>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12" align="right">
+                  <button name="AddToCart" class="btn btn-primary" id="addtocart" onclick="checkTotal()">Checkout</button>
+              </div>
+          </div>
+      {% else %}
+          <h4 id="slogan" align="center">Your shopping cart is empty</h4>
+      {% endif %}
+        {% csrf_token %}
+        </form>
+    </div>
+    <script src="https://use.fontawesome.com/6039a713fa.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script>
+        var total = 0;
+        function plus(a) {
+            if (a >= 0){
+                document.getElementById("quantity "+a.toString()).value++;
+                var quantity = parseInt(document.getElementById("quantity "+a.toString()).value);
+                var price = parseFloat(document.getElementById("price "+a.toString()).innerHTML);
+                var sum = price*quantity;
+                document.getElementById("total "+a.toString()).innerHTML = sum;
+                total =total+price;
+                document.getElementById("all").innerHTML = total;
+            }
+        }
+        function minus(a) {
+            if (document.getElementById("quantity "+a.toString()).value>0){
+             document.getElementById("quantity "+a.toString()).value--;
+             var quantity = parseInt(document.getElementById("quantity "+a.toString()).value);
+             var price = parseFloat(document.getElementById("price "+a.toString()).innerHTML);
+             var sum = price*quantity;
+             document.getElementById("total "+a.toString()).innerHTML = sum;
+             total =total-price;
+             document.getElementById("all").innerHTML = total;
+            }
+        }
+        function refresh() {
+            location.reload();
+        }
+        function checkTotal() {
+            if(total == 0){
+                 $(document).ready(function(){
+                    $("#myModal").modal();
+                 });
+            }
+        }
+    </script>
+  </body>
+</html>

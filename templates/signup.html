@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/store/css/style.css">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Rakkas" rel="stylesheet">
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Registration</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {% if user_form.errors %}
+                <p>{{ user_form.username.errors.as_text|cut:"* " }}</p>
+            {% elif customer_form.errors %}
+                <p>{{ customer_form.confirm_password.errors.as_text|cut:"* " }}</p>
+            {% else %}
+                <p>Thank You for registering</p>
+            {% endif %}
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6"><a href="{% url 'index' %}"><img src="../static/store/Kloth.png" alt="Logo" id="logo" class="img-responsive"></a></div>
+        <div class="col-sm-6 text-center text-uppercase" id="slogan">
+          <br>
+          <br>
+          <h1>Klass Office</h1>
+          <h3>Your One Stop to Office Supplies</h3>
+        </div>
+      </div>
+      <hr class="hstyle">
+      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-center" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'categories' %}">Shop Categories</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-sm-12">
+          {% if registered %}
+            <script>
+            $(document).ready(function(){
+                $("#myModal").modal();
+            });
+            </script>
+          {% else %}
+          <form class="form-signup" method="POST">
+            <h3 class="form-signup-heading">Sign Up</h3>
+                {% for field in user_form %}
+                    {{ field.label_tag }}
+                    <br>
+                    {{ field }}
+                    <br>
+                {% endfor %}
+                {% for field in customer_form %}
+                    {{ field.label_tag }}
+                    <br>
+                    {{ field }}
+                    <br>
+                {% endfor %}
+                {% if user_form.errors or customer_form.errors %}
+                  <script>
+                    $(document).ready(function(){
+                        $("#myModal").modal();
+                    });
+                  </script>
+              {% endif %}
+              {% csrf_token %}
+          <br>
+            <button class="btn btn-md btn-primary btn-block" type="submit" name="Sign_Up">Sign Up</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
